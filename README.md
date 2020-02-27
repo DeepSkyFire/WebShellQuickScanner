@@ -61,6 +61,11 @@ if you want to scan path "/data/www-data" and save log file to "/home/wwwlogs", 
 
     ./WebShellScanner.sh -h
 
+### Periodic inspection
+
+You can use `crontab` for scheduled scans.
+
+
 Parameter Description
 --------------
 
