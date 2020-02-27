@@ -1,44 +1,89 @@
 #!/bin/bash
 
+VER="0.0.2"
+
 scanPath=""
-if [ -n "$1" ]; then
-    scanPath="$1"
-    if [ ! -d "$scanPath" ]; then
-        echo "Scan path does not exist."
-        exit 1
-    fi
-else
-    echo "Scan path cannot be empty."
-    exit 1
-fi
-
-telegramEnable=true
+telegramEnable=false
 telegramBotToken=""
-if [ -n "$2" ]; then
-    telegramBotToken="$2"
-else
-    telegramEnable=false
-fi
-
 telegramChatId=""
-if [ -n "$3" ]; then
-    telegramChatId="$3"
-else
-    telegramEnable=false
-fi
-
 hostNameType=""
-if [ -n "$4" ]; then
-    hostNameType="$4"
-else
-    hostNameType=$(hostname )
-fi
+logfilepath=""
 
-if [ "$telegramEnable" = true ]; then
+while getopts "p:t:c:n:l:h" arg; do
+      case $arg in
+      h)
+        echo "WebShellQuickScanner Help Information"
+        echo ""
+        echo "-p <PATH>                        Scan Path."
+        echo "-t <Telegram Bot Token>          Telegram Bot Token."
+        echo "-t <Telegram Chat id>            Telegram Chat id."
+        echo "-n <HostName>                    Customize HostName."
+        echo "-l <PATH>                        Log file save path(Do not be end with '/')."
+        echo ""
+        echo ""
+        echo "WebShellQuickScanner - Ver: $VER"
+        echo "Made by DeepSkyFire"
+        echo "https://github.com/DeepSkyFire/WebShellQuickScanner"
+        exit 1
+      ;;
+      p)
+        if [ -n "$OPTARG" ]; then
+            scanPath=$OPTARG
+            if [ ! -d "$scanPath" ]; then
+                echo "Scan path does not exist."
+                exit 1
+            fi
+        else
+            echo "Scan path cannot be empty."
+            exit 1
+        fi
+      ;;
+      t)
+        if [ -n "$OPTARG" ]; then
+            telegramBotToken="$OPTARG"
+        fi
+      ;;
+      c)
+        if [ -n "$OPTARG" ]; then
+            telegramChatId="$OPTARG"
+        fi
+      ;;
+      n)
+        if [ -n "$OPTARG" ]; then
+            hostNameType="$OPTARG"
+        fi
+      ;;
+      l)
+        if [ -n "$OPTARG" ]; then
+            logfilepath="$OPTARG"
+            if [ ! -d "$logfilepath" ]; then
+                echo "Log file save path does not exist."
+                exit 1
+            fi
+        fi
+      ;;
+      ?)
+        echo "Invalid parameter. You can using '-h' to check help information."
+        exit 1
+      ;;
+      esac
+done
+
+if [[ -n $telegramBotToken ]] && [[ -n $telegramChatId ]]; then
+    telegramEnable=true
     if [ ! -f /usr/bin/curl ]; then
         echo "You should be install cURL first. Please use 'apt install curl' or 'yum install curl'."
         exit 1
     fi
+    if [ ! -n $hostNameType ]; then
+        hostNameType=$(hostname )
+    fi
+fi
+
+if [ ! -n $logfilepath ]; then
+    logfilepath="/dev/null"
+else
+    logfilepath="$logfilepath/WebShellScanner_ScanLog_$(date +%Y-%m-%d.%T).txt"
 fi
 
 scanResult=$(find $scanPath -name "*.php" |xargs egrep -n 'assert|phpspy|c99sh|milw0rm|eval|\(gunerpress|\(base64_decoolcode|spider_bc|shell_exec|passthru|\(\$\_\POST\[|eval \(str_rot13|\.chr\(|\$\{\"\_P|eval\(\$\_R|file_put_contents\(\.\*\$\_|base64_decode')
@@ -46,6 +91,7 @@ scanResult=$(find $scanPath -name "*.php" |xargs egrep -n 'assert|phpspy|c99sh|m
 scanResultTempFile="/tmp/temp_WebShellScanner_ScanResult.txt"
 
 echo "$scanResult" >> $scanResultTempFile
+echo "$scanResult" >> $logfilepath
 
 scanResultTempFileSize=$(ls -l $scanResultTempFile | awk '{ print $5 }' )
 
