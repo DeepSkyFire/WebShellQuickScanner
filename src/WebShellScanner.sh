@@ -93,12 +93,12 @@ fi
 if [ ! -n $logfilepath ]; then
     logfilepath="/dev/null"
 else
-    logfilepath="$logfilepath/WebShellScanner_ScanLog_$(date +%Y-%m-%d.%T).txt"
+    logfilepath="$logfilepath/WebShellQuickScanner_ScanLog_$(date +%Y-%m-%d.%T).txt"
 fi
 
 scanResult=$(find $scanPath -name "*.php" |xargs egrep -n 'assert|phpspy|c99sh|milw0rm|eval|\(gunerpress|\(base64_decoolcode|spider_bc|shell_exec|passthru|\(\$\_\POST\[|eval \(str_rot13|\.chr\(|\$\{\"\_P|eval\(\$\_R|file_put_contents\(\.\*\$\_|base64_decode')
 
-scanResultTempFile="/tmp/temp_WebShellScanner_ScanResult.txt"
+scanResultTempFile="/tmp/temp_WebShellQuickScanner_ScanResult.txt"
 
 echo "$scanResult" >> $scanResultTempFile
 echo "$scanResult" >> $logfilepath
@@ -115,11 +115,11 @@ rm $scanResultTempFile
 
 if [ "$telegramEnable" = true ]; then
     if [ $scanResultRows == 0 ]; then
-        curl -s -o /dev/null -X POST "https://api.telegram.org/bot$telegramBotToken/sendMessage" -d parse_mode=HTML -d chat_id=$telegramChatId -d text="<b>WebShellScanner - Scan Result</b>%0A%0AReport Server: $hostNameType%0AReport Date: $(date +%Y-%m-%d/%T)%0A%0A<i>Congratulations, no results find!</i>"
+        curl -s -o /dev/null -X POST "https://api.telegram.org/bot$telegramBotToken/sendMessage" -d parse_mode=HTML -d chat_id=$telegramChatId -d text="<b>WebShellQuickScanner - Scan Result</b>%0A%0AReport Server: $hostNameType%0AReport Date: $(date +%Y-%m-%d/%T)%0A%0A<i>Congratulations, no results find!</i>"
         echo "Congratulations, no results found!"
         exit 1
     else
-        curl -s -o /dev/null -X POST "https://api.telegram.org/bot$telegramBotToken/sendMessage" -d parse_mode=HTML -d chat_id=$telegramChatId -d text="<b>WebShellScanner - Scan Result</b>%0A%0AReport Server: $hostNameType%0AReport Date: $(date +%Y-%m-%d/%T)%0A%0A<b>Scan Results: $scanResultRows file be find.</b>%0A%0A$scanResult"
+        curl -s -o /dev/null -X POST "https://api.telegram.org/bot$telegramBotToken/sendMessage" -d parse_mode=HTML -d chat_id=$telegramChatId -d text="<b>WebShellQuickScanner - Scan Result</b>%0A%0AReport Server: $hostNameType%0AReport Date: $(date +%Y-%m-%d/%T)%0A%0A<b>Scan Results: $scanResultRows file be find.</b>%0A%0A$scanResult"
         echo "Scan Result: $scanResultRows file be find."
         echo ""
         echo "$scanResult"
