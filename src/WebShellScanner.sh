@@ -21,7 +21,7 @@ while getopts "p:t:c:n:l:h" arg; do
         echo ""
         echo "-p <PATH>                        Scan Path."
         echo "-t <Telegram Bot Token>          Telegram Bot Token."
-        echo "-t <Telegram Chat id>            Telegram Chat id."
+        echo "-c <Telegram Chat id>            Telegram Chat id."
         echo "-n <HostName>                    Customize HostName."
         echo "-l <PATH>                        Log file save path(Do not be end with '/')."
         echo ""
