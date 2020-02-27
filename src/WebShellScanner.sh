@@ -12,6 +12,11 @@ logfilepath=""
 while getopts "p:t:c:n:l:h" arg; do
       case $arg in
       h)
+        echo ""
+        echo ""
+        echo ""
+        echo "==================================================================================="
+        echo ""
         echo "WebShellQuickScanner Help Information"
         echo ""
         echo "-p <PATH>                        Scan Path."
@@ -24,6 +29,11 @@ while getopts "p:t:c:n:l:h" arg; do
         echo "WebShellQuickScanner - Ver: $VER"
         echo "Made by DeepSkyFire"
         echo "https://github.com/DeepSkyFire/WebShellQuickScanner"
+        echo ""
+        echo "==================================================================================="
+        echo ""
+        echo ""
+        echo ""
         exit 1
       ;;
       p)
