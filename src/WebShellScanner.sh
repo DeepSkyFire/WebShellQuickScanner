@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER="0.0.4"
+VER="0.0.5"
 
 scanPath=""
 telegramEnable=false
@@ -43,9 +43,6 @@ while getopts "p:t:c:n:l:h" arg; do
                 echo "Scan path does not exist."
                 exit 1
             fi
-        else
-            echo "Scan path cannot be empty."
-            exit 1
         fi
       ;;
       t)
@@ -78,6 +75,11 @@ while getopts "p:t:c:n:l:h" arg; do
       ;;
       esac
 done
+
+if [ ! -d "$scanPath" ]; then
+    echo "Scan path cannot be empty."
+    exit 1
+fi
 
 if [[ -n $telegramBotToken ]] && [[ -n $telegramChatId ]]; then
     telegramEnable=true
