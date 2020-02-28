@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VER="0.0.3"
+VER="0.0.4"
 
 scanPath=""
 telegramEnable=false
@@ -96,7 +96,7 @@ else
     logfilepath="$logfilepath/WebShellQuickScanner_ScanLog_$(date +%Y-%m-%d.%T).txt"
 fi
 
-scanResult=$(find $scanPath -name "*.php" |xargs egrep -n 'assert|phpspy|c99sh|milw0rm|eval|create_function|register_shutdown_function|\(gunerpress|\(base64_decoolcode|spider_bc|shell_exec|passthru|\(\$\_\POST\[|\(\$\_\REQUEST\[|\(\$\_\GET\[|\(\$\_\FILE\[|\(\$\_\SESSION\[|eval \(str_rot13|\.chr\(|\$\{\"\_P|eval\(\$\_R|file_put_contents\(\.\*\$\_|file_get_contents\(\.\*\$\_|base64_decode')
+scanResult=$(find $scanPath -name "*.php" -print0 |xargs -0 egrep -n 'assert|phpspy|c99sh|milw0rm|eval|create_function|register_shutdown_function|\(gunerpress|\(base64_decoolcode|spider_bc|shell_exec|passthru|\(\$\_\POST\[|\(\$\_\REQUEST\[|\(\$\_\GET\[|\(\$\_\FILE\[|\(\$\_\SESSION\[|eval \(str_rot13|\.chr\(|\$\{\"\_P|eval\(\$\_R|file_put_contents\(\.\*\$\_|file_get_contents\(\.\*\$\_|base64_decode')
 
 scanResultTempFile="/tmp/temp_WebShellQuickScanner_ScanResult.txt"
 
