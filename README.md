@@ -14,6 +14,14 @@ that it'll only list the files that use the high-risk PHP function, and everythi
 
 ### It's not a substitute for antivirus software. The results are for reference only.
 
+Multi-language
+--------------
+
+[Simplified Chinese 简体中文](https://www.vpstry.com/archives/555.html)
+
+[Traditional Chinese 繁體中文](https://deepskyfire.com/sub/10.html)
+
+
 Quick start
 --------------
 
@@ -89,4 +97,3 @@ License
 --------------
 
 The project is released under the terms of the GPLv3.
-
