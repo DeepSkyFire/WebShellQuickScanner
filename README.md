@@ -21,6 +21,8 @@ Multi-language
 
 [Traditional Chinese 繁體中文](https://deepskyfire.com/sub/10.html)
 
+[Japanese 日本語](https://qiita.com/DeepSkyFire/items/bf43f0a5ccf672e135dc)
+
 
 Quick start
 --------------
